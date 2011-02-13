@@ -1,0 +1,18 @@
+dev: true # TODO: compress code when dev is set to false
+relative_paths: true
+
+# Some variables for Feed etc.
+base_url: "http://example.com" # Without trailing slash!
+author_name: "Somebody" # Is your name “Somebody”?
+author_uri: "http://example.com" # Almost base_url, ok
+
+# Some defaults
+text_extensions: [ 'css', 'erb', 'haml', 'htm', 'html', 'js', 'less', 'markdown', 'md', 'php', 'rb', 'sass', 'scss', 'txt', 'xhtml', 'xml' ]
+output_dir: output
+index_filenames: [ 'index.html' ]
+enable_output_diff: false
+data_sources:
+  -
+    type: filesystem_unified
+    items_root: /
+    layouts_root: /

@@ -1,0 +1,65 @@
+#!/usr/bin/env ruby
+
+# Feeds!
+compile '/feeds/*/' do
+  filter :erb
+end
+route '/feeds/*/' do
+  item.identifier[0..-2] + '.xml'
+end
+
+# Stylesheets in `s` directory
+compile '/_stylesheets/*' do
+end
+route '/_stylesheets/*/' do
+  '/s/' + item.identifier[14..-2] + '.css'
+end
+
+# Javascripts in `j` directory
+compile '/_javascripts/*' do
+end
+route '/_javascripts/*/' do
+  '/j/' + item.identifier[14..-2] + '.js'
+end
+
+# Different defaults based on extensions
+compile '*' do
+  if !item.binary?
+    case item[:extension]
+    when 'markdown'
+      filter :erb # 'cause there is no anythink alike in makuku
+      filter :maruku, {:attr_wrapper => '"'}
+    when 'haml'
+      filter :haml, {:attr_wrapper => '"'}
+    when 'sass'
+      filter :sass
+    else
+      filter :erb
+    end
+
+    if item[:extension] != 'sass'
+      # Default layout for everyone except sass
+      layout 'default'
+    end
+
+    # some codestyle (TODO: move all hardcoded codestyle decisions to config)
+    filter :htmlcodestyle
+    
+    # relative paths to html and css for better use of static files
+    if config[:relative_paths]
+      filter :relativize_paths, :type => :html
+      filter :relativize_paths, :type => :css
+    end
+  end
+end
+
+route '*' do 
+  if item.binary? 
+    item.identifier.chop + '.' + item[:extension] 
+  else 
+    item.identifier + 'index.html' 
+  end 
+end
+
+# Using HAML for layouts by default
+layout '*', :haml, {:attr_wrapper => '"'}

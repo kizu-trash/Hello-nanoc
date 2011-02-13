@@ -1,0 +1,10 @@
+!!! 5
+%html#nojs
+  %head
+    = render 'html/head'
+    %title<
+      = @item[:title] + " — " + @config[:base_url]
+  %body
+    .l-section
+      = yield
+    = render "html/foot"

@@ -1,0 +1,15 @@
+/* TODO: Split all these to imported files */
+
+/* Hack for css/js split file *//*@cc_on /*@if (1) @else @*/
+
+.some-selector {
+	zoom: 1;
+	}
+
+/*@end @*//* Hack for css/js split file */
+<!-- /*
+
+// HTML5 doctor
+(function(){var e = "abbr,article,aside,audio,canvas,datalist,details,eventsource,figure,footer,header,hgroup,mark,menu,meter,nav,output,progress,section,time,video".split(','),i=e.length;while(i--){document.createElement(e[i])}})()
+
+<!-- */
