@@ -25,8 +25,9 @@ end
 # Different defaults based on extensions
 compile '*' do
   if !item.binary?
+    filter :bem
     case item[:extension]
-    when 'markdown'
+    when 'md'
       filter :erb # 'cause there is no anythink alike in makuku
       filter :maruku, {:attr_wrapper => '"'}
     when 'haml'

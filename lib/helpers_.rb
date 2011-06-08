@@ -26,9 +26,27 @@ class HTMLCodeStyle < Nanoc3::Filter
     
     # Tabs to spaces (minus one tag for beautier indent)
     result.gsub!(/^((  )+)/){
-      '	' * ($1.length/2-1)
+      ' ' * ($1.length/2-1)
     }
 
+    return result
+  end
+end
+
+class BEMgenerator < Nanoc3::Filter
+  identifier :bem
+  type :text
+  
+  def run(content, params={})
+    result = content
+    
+    # Find out how to make it into erb from html or smth like that
+    result.gsub!(/<%([\w_-]+)([^%]*)%>/){
+      "<% render 'blocks/"+$1+"' "+$2+" do %>"
+    }
+    result.gsub!(/%(b-link)(.*)$/){
+      "=render 'blocks/"+$1+"' "+$2+" do"
+    }
     return result
   end
 end
